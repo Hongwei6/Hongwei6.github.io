@@ -5,8 +5,6 @@ draft: false
 description: "博客正式上线,这篇文章展示 Markdown 的各种排版能力。"
 tags: ["随笔", "开始"]
 categories: ["公告"]
-showToc: true
-TocOpen: true
 ---
 
 欢迎来到我的技术博客!这是第一篇文章,用来演示各种 Markdown 排版效果。

@@ -1,0 +1,23 @@
+# -- Hugo 基础配置 --
+baseURL = "https://hongwei6.github.io/"
+defaultContentLanguage = "zh-cn"
+languageCode = "zh-cn"
+enableRobotsTXT = true
+summaryLength = 30
+theme = "blowfish"
+
+[pagination]
+  pagerSize = 10
+
+[imaging]
+  anchor = "Center"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  author = "authors"
+  series = "series"
+
+[sitemap]
+  changeFreq = "weekly"
+  priority = 0.5
