@@ -1,0 +1,83 @@
+# ===========================================================================
+# 站点基础配置 (Site Configuration)
+# ===========================================================================
+baseURL = "https://hongwei6.github.io/"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh-cn"
+language = "zh-cn"
+title = "Hongwei's Blog"
+theme = "PaperMod"
+enableRobotsTXT = true
+enableEmoji = true
+# 启用自动生成文章目录、字数统计、阅读时长
+tableOfContents = true
+
+# 使用 Hugo 内置代码高亮
+[markup.highlight]
+  lineNos = false
+  codeFences = true
+  guessSyntax = true
+  style = "monokai"
+
+[markup.goldmark.renderer]
+  unsafe = true   # 允许文章里写原生 HTML
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 4
+  ordered = false
+
+# ===========================================================================
+# PaperMod 主题参数
+# ===========================================================================
+[params]
+  author = "Hongwei"
+  description = "个人技术博客 - 记录编程、学习与思考"
+  defaultTheme = "auto"           # auto | light | dark
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true         # 文章底部显示「上一篇/下一篇」
+  ShowBreadCrumbs = true          # 显示面包屑导航
+  ShowCodeCopyButtons = true      # 代码块右上角显示「复制」按钮
+  ShowWordCount = true
+  ShowToc = true                  # 显示目录
+  TocOpen = true                  # 默认展开目录
+  disableSpecial1stPost = true
+
+  [params.homeInfoParams]
+    Title = "👋 你好,我是 Hongwei"
+    Content = """
+欢迎来到我的技术博客。
+这里记录我在 **编程、软件开发与技术学习** 过程中的笔记、思考与实践。
+"""
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/Hongwei6"
+
+# ===========================================================================
+# 输出格式:启用搜索所需的 JSON
+# ===========================================================================
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# ===========================================================================
+# 顶部导航菜单
+# ===========================================================================
+[[menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = 5
+
+[[menu.main]]
+  identifier = "search"
+  name = "搜索"
+  url = "/search/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 15
