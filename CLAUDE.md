@@ -4,52 +4,55 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A personal tech blog built with **Hugo** and the **Blowfish** theme (v2.105.0, cyberpunk "neon" color scheme), deployed to GitHub Pages at https://hongwei6.github.io via GitHub Actions on every push to `main`.
-
-> ⚠️ `README.md` is **stale** — it describes the previous PaperMod setup (`hugo.toml`, `hugo new content posts/...`, `themes/PaperMod`). The repo has since migrated to Blowfish. Trust this file and the `config/_default/` directory, not the README, for how the site actually works.
+A personal tech blog built with **Hugo** and the **Terminal** theme ([panr/hugo-theme-terminal](https://github.com/panr/hugo-theme-terminal)), styled with a **Matrix terminal-green** color scheme, deployed to GitHub Pages at https://hongwei6.github.io via GitHub Actions on every push to `main`.
 
 ## Commands
 
 ```bash
 hugo server -D              # Local dev server at http://localhost:1313 (includes drafts)
 hugo server                 # Local server, drafts hidden (production-like)
-hugo --minify               # Full production build into ./public
+hugo --minify --gc          # Full production build into ./public
 hugo new posts/my-post.md   # Scaffold a new post from archetypes/default.md
-git submodule update --remote themes/blowfish   # Upgrade the theme
+git submodule update --init --recursive     # First-time: fetch themes/terminal
+git submodule update --remote themes/terminal   # Upgrade the theme
 ```
 
-Local Hugo is **0.164.0+extended** (Homebrew). CI pins `HUGO_VERSION: 0.164.0`. The **extended** build is required — Blowfish compiles Tailwind via Dart Sass, and the CI workflow installs `dart-sass` separately. A plain (non-extended) Hugo will fail the build.
+Local Hugo is **0.164.0+extended** (Homebrew). CI pins `HUGO_VERSION: 0.164.0`. The **extended** build is required — Terminal requires Hugo Extended ≥ 0.90 (it compiles SCSS via Hugo Pipes). A plain (non-extended) Hugo will fail the build.
 
 ## Architecture
 
-### Configuration lives in `config/_default/` (NOT `hugo.toml`)
-Hugo's config-splitting is used here — a flat `hugo.toml` at the repo root does **not** exist. Settings are split across language-scoped files in `config/_default/`, all loaded together:
+### Configuration is a single root `config.toml`
+Terminal uses Hugo's flat single-file config at the repo root — **not** a `config/` directory (that was the old Blowfish setup and is gone). Everything lives in `config.toml`:
 
-| File | Holds |
-|------|-------|
-| `hugo.toml` | `baseURL`, `theme = "blowfish"`, `defaultContentLanguage`, taxonomies (`tag/category/author/series`), pagination, imaging |
-| `languages.zh-cn.toml` | Site title, `params.author` (name/headline/bio/social links) for the `zh-cn` language |
-| `params.toml` | **Most theme behavior**: `colorScheme = "neon"`, `homepage.layout = "hero"`, list/article/footer/header settings, `enableSearch`, `enableCodeCopy` |
-| `markup.toml` | Code highlight (`style = "github-dark"`, `noClasses = false`), Goldmark `unsafe = true` (raw HTML allowed in posts), block attributes |
-| `menus.zh-cn.toml` | Top nav (`文章`/`标签`/`分类`/GitHub) and footer nav |
+| Section | Holds |
+|---------|-------|
+| top-level | `baseURL`, `theme = "terminal"`, `defaultContentLanguage = "zh-cn"`, `pagination`, `summaryLength` |
+| `[markup.highlight]` | `noClasses = false` — **required** for Terminal's custom Chroma syntax highlighting |
+| `[markup.goldmark.renderer]` | `unsafe = true` — raw HTML allowed in posts |
+| `[params]` | Theme behavior: `contentTypeName = "posts"`, `showMenuItems`, `centerTheme`, `Toc`, `readingTime`, `showLastUpdated`, `dateFormat` |
+| `[languages.zh-cn]` | Site title, and `[languages.zh-cn.params]` (subtitle, menu文案, logo text) |
+| `[languages.zh-cn.menu.main]` | Top nav: `文章` / `标签` / `分类` |
 
-To change site appearance, navigation, or article features, edit the matching file here — do not create a root `hugo.toml`.
+To change appearance, navigation, or article features, edit `config.toml`. Taxonomies need no declaration — Hugo ships with `tags`/`categories` by default, and post front matter uses them directly.
 
-### Theme is a git submodule, not vendored source
-`themes/blowfish` is tracked via `.gitmodules` pointing at `nunocorcao/blowfish` branch `main`. **Never hand-edit files under `themes/blowfish/`** — changes will be lost on the next submodule update. Site-level overrides go in `layouts/` and `assets/` (currently empty; Blowfish supports standard Hugo template/scss overrides there).
+### Theme is a git submodule
+`themes/terminal` is tracked via `.gitmodules` (submodule `panr/hugo-theme-terminal`). **Never hand-edit files under `themes/terminal/`** — changes are lost on the next submodule update. CI uses `submodules: recursive` at checkout.
 
-CI uses `submodules: recursive` at checkout, so the theme is fetched fresh each build. Local clones need `git submodule update --init --recursive` once.
+### Matrix color scheme via `static/style.css` (NOT `assets/css/colors.css`)
+Terminal's `layouts/partials/head.html` loads theme CSS via `resources.Match "css/*.css"`, then appends `static/style.css` **last**, so it has the highest precedence. The matrix green scheme overrides the `:root` CSS variables (`--background`, `--foreground`, `--accent`) that the theme defines in `assets/css/main.css`.
+
+> ⚠️ The theme's README mentions `assets/css/colors.css`, but this theme's `head.html` does **not** load it — that path is a leftover from an older theme version and won't apply. Use `static/style.css` for color overrides.
 
 ### Content
 - Posts: `content/posts/*.md` — front matter uses `title`, `date`, `draft`, `description`, `tags`, `categories` (see `archetypes/default.md`).
-- Homepage: `content/_index.md` uses Blowfish's `{{< typeit >}}` shortcode for a typewriter hero (works because `homepage.layout = "hero"` in `params.toml`).
+- Homepage: `content/_index.md` — minimal front matter + a one-liner; Terminal renders the post list below it (driven by `contentTypeName = "posts"`). Do **not** use Blowfish-only shortcodes like `{{< typeit >}}` (this theme doesn't ship them).
 - `draft = true` posts are excluded from production builds — flip to `false` before publishing.
 
 ### Deployment (`.github/workflows/hugo.yml`)
-Push to `main` → builds with `hugo --minify --baseURL <pages-base-url>/` (production env, `TZ: America/Los_Angeles`) → uploads `./public` → deploys to GitHub Pages. `fetch-depth: 0` is required so Hugo's `.Lastmod` resolves from full git history. Concurrency group `pages` serializes deploys.
+Push to `main` → builds with `hugo --minify --baseURL <pages-base-url>/` (production env, `TZ: America/Los_Angeles`) → uploads `./public` → deploys to GitHub Pages. `fetch-depth: 0` is required so `showLastUpdated`/`.Lastmod` resolve from full git history. Concurrency group `pages` serializes deploys.
 
 ## Conventions
 
-- Default language is `zh-cn`; content and config comments are in Chinese. Match this when adding posts or editing config comments.
-- Prefer Blowfish's built-in shortcodes and `params.toml` knobs over adding custom templates. The "neon/hero/card" aesthetic is configured, not coded.
+- Default language is `zh-cn`; content and config comments are in Chinese. Match this when adding posts or editing config.
+- For styling tweaks, prefer overriding CSS variables in `static/style.css` over editing the theme. The "matrix green" aesthetic lives there.
 - `.omc/` is operational state (oh-my-claudecode) — gitignored tooling artifacts, not part of the site.
