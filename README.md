@@ -1,17 +1,19 @@
 # Hongwei's Blog
 
-基于 **Hugo + Terminal** 主题的个人技术博客(终端绿 matrix 配色),托管在 GitHub Pages。
+基于 **Hugo + PaperMod** 主题的个人技术博客,托管在 GitHub Pages。
 
 - 🌐 线上地址:<https://hongwei6.github.io>
 - 📦 仓库:<https://github.com/Hongwei6/Hongwei6.github.io>
-- 🎨 主题:[hugo-theme-terminal](https://github.com/panr/hugo-theme-terminal)
+- 🎨 主题:[hugo-PaperMod](https://github.com/adityatelange/hugo-PaperMod)
 
 ## ✨ 特性
 
-- 复古终端风 + Matrix 终端绿配色(`static/style.css`)
-- 代码高亮(Chroma,github-dark 风格)+ 一键复制
-- 文章目录(TOC)、阅读时间、最后更新时间
-- 标签、分类
+- 明色 / 暗色双主题(跟随系统自动切换)+ 手动切换按钮
+- 首页 Profile 卡片 + 最新文章列表
+- 代码高亮 + 一键复制
+- 文章目录(TOC)、阅读时间、字数统计、最后更新时间
+- 全文搜索(基于 fuse.js)
+- 标签、分类、归档
 - RSS 订阅:`https://hongwei6.github.io/index.xml`
 - GitHub Actions 自动部署(推送 `main` 即上线)
 
@@ -57,25 +59,24 @@ git push
 ```
 Hongwei6.github.io/
 ├── content/              # 文章(Markdown)
-│   ├── _index.md         # 首页
+│   ├── _index.md         # 首页(Profile 模式)
 │   └── posts/            # 博客文章放这里
-├── themes/terminal/      # 主题(git submodule,勿手动改)
-├── config.toml           # 站点配置(标题、菜单、语言、params)
-├── static/style.css      # Matrix 终端绿配色覆盖
+├── themes/PaperMod/      # 主题(git submodule,勿手动改)
+├── hugo.yml              # 站点配置(标题、菜单、Profile、params)
 ├── archetypes/           # 新建文章的模板
 └── .github/workflows/    # 自动部署脚本
 ```
 
 ## ⚙️ 常见配置
 
-- 改站点标题、副标题、菜单文案 → 编辑 `config.toml` 的 `[languages.zh-cn.params]`
-- 改导航菜单 → 编辑 `config.toml` 的 `[[languages.zh-cn.menu.main]]`
-- 改配色 → 编辑 `static/style.css`(`:root` 里的 `--background`/`--foreground`/`--accent`)
-- 升级主题 → `git submodule update --remote themes/terminal`
+- 改站点标题、首页 Profile 副标题、社交链接 → 编辑 `hugo.yml` 的 `params`
+- 改导航菜单 → 编辑 `hugo.yml` 的 `menu.main`
+- 改明暗默认 / 关闭自动切换 → 编辑 `hugo.yml` 的 `params.defaultTheme` / `params.disableThemeToggle`
+- 升级主题 → `git submodule update --remote themes/PaperMod`
 
 ## 🛠️ 环境要求
 
-本地需要 **Hugo Extended**(本项目 + CI 均用 0.164.0;Terminal 要求 Extended ≥ 0.90):
+本地需要 **Hugo**(本项目 + CI 均用 0.164.0;PaperMod 要求 ≥ 0.146.0):
 
 ```bash
 brew install hugo
