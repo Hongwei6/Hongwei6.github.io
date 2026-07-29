@@ -53,16 +53,20 @@ jobs:
         with:
           version: 9
 
-      - name: Install dependencies
+      - name: Install theme dependencies
+        working-directory: themes/aiovtue
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build with Hugo (via theme build script)
+      - name: Fetch theme static assets
+        working-directory: themes/aiovtue
+        run: node scripts/fetch-missing-static.mjs
+
+      - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
           TZ: America/Los_Angeles
-          GITHUB_PAGES_URL: ${{ steps.pages.outputs.base_url }}
-        run: pnpm build
+        run: hugo --minify --cleanDestinationDir --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
