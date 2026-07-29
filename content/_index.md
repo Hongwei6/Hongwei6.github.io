@@ -1,3 +1,0 @@
----
-title: "Hongwei's Blog"
----
