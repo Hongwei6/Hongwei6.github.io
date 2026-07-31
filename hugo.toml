@@ -1,17 +1,20 @@
 # ===========================================================================
-# Hugo + AIOVTUE 主题配置
-# 主题: https://github.com/AIOVTUE/hugo-theme-aiovtue
+# Hugo + github-style 主题配置
+# 主题: https://github.com/MeiK2333/github-style
 # ===========================================================================
 baseURL = 'https://hongwei6.github.io/'
-locale = 'zh-cn'
+languageCode = 'zh-cn'
 defaultContentLanguage = 'zh'
 title = "Hongwei's Blog"
-theme = 'aiovtue'
-themesDir = 'themes/aiovtue/themes'
+theme = 'github-style'
 hasCJKLanguage = true
 enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
+
+# 代码高亮(github-style 使用 Pygments 配置)
+pygmentsCodeFences = true
+pygmentsUseClasses = true
 
 # --- 站点地图 ---
 [sitemap]
@@ -28,10 +31,19 @@ enableGitInfo = true
   category = 'categories'
   tag = 'tags'
 
-# --- 输出格式 ---
+# --- 输出格式(启用本地搜索需要 home 输出 json) ---
 [outputs]
-  home = ['HTML', 'RSS']
+  home = ['HTML', 'RSS', 'JSON']
   section = ['HTML', 'RSS']
+
+[outputFormats.JSON]
+  mediaType = 'application/json'
+  baseName = 'index'
+  isPlainText = false
+
+# --- 最后修改时间(从 git 历史解析) ---
+[frontmatter]
+  lastmod = ['lastmod', ':fileModTime', ':default']
 
 # --- Markdown 渲染 ---
 [markup]
@@ -45,161 +57,35 @@ enableGitInfo = true
           block = [['\[', '\]'], ['$$', '$$']]
           inline = [['\(', '\)'], ['$', '$']]
   [markup.highlight]
-    style = "github"
+    style = 'github'
     noClasses = false
     lineNos = false
     tabWidth = 4
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 4
-    ordered = false
 
 # ===========================================================================
 # 站点参数
 # ===========================================================================
 [params]
-  subtitle = 'Blog'
+  author = 'Hongwei'
   description = '记录编程、学习与思考'
-  primaryColor = '#4A90D9'
-  favicon = '/favicon.png'
-  defaultCover = '/hero/tt3.png'
-  math = false
-  postIndent = true
+  github = 'Hongwei6'
+  email = ''
+  url = 'https://hongwei6.github.io/'
+  keywords = 'blog, 编程, Spring AI, Java'
+  rss = true
+  lastmod = true
+  location = 'China'
+  userStatusEmoji = '🚀'
+  enableSearch = true
+  # 使用主题自带的图标资源
+  favicon = '/images/github-mark.png'
+  avatar = '/images/avatar.png'
+  headerIcon = '/images/github-mark-white.png'
 
-  # --- 文章正文 ---
-  [params.post]
-    fontSize = "1.1rem"
-
-  # --- 首页布局 ---
-  [params.home]
-    layout = 'cards'
-    desktopListColumns = 'single'
-    mobileCardsLayout = 'stack'
-    mobileCardsBatchSize = 10
-
-  # --- 首页 Hero ---
-  [params.hero]
-    title = "Hongwei's Blog"
-    motto = '记录编程、学习与思考'
-    randomUrls = false
-    enableHitokoto = true
-    typewriter = true
-    typewriterSpeed = 80
-    style = 'dot'
-    fixedImg = true
-    urls = [
-      '/hero/hero-1.jpg',
-      '/hero/hero-2.png',
-      '/hero/hero-3.jpg',
-    ]
-
-  # --- 首页公告栏 ---
-  [params.notice]
-    title = '公告栏'
-    rotateInterval = 5000
-    [[params.notice.sections]]
-      label = '--- 欢迎 ---'
-      lines = ['Welcome to my blog!']
-
-  # --- 页脚 ---
-  [params.footer]
-    since = 2026
-
-  # --- 侧栏作者信息 ---
-  [params.author]
-    name = 'Hongwei'
-    avatar = '/favicon.png'
-    statusEmoji = '💻'
-    statusMessage = 'Coding...'
-
-  # --- 社交图标 ---
-  [[params.social]]
-    name = 'GitHub'
-    link = 'https://github.com/Hongwei6'
-    icon = 'ri:github-line'
-    color = '#6e5494'
-  [[params.social]]
-    name = 'RSS'
-    link = '/index.xml'
-    icon = 'ri:rss-line'
-    color = 'orange'
-
-  # --- 顶栏导航 ---
-  [params.navbar]
-    titleParts = ["Hongwei's", "Blog"]
-    subTitle = '记录编程、学习与思考'
-    offset = 0
-
-    [params.navbar.mobileCollapse]
-      enable = true
-      includeHome = false
-      scrollThreshold = 5
-      scrollDelta = 10
-      revealMode = 'scrollUp'
-
-    [params.navbar.desktopCollapse]
-      enable = false
-      includeHome = false
-
-    [params.navbar.scrollWithPage]
-      enable = false
-      includeHome = false
-
-  # --- 全文搜索 ---
-  [params.search]
-    enable = true
-    threshold = 0.35
-
-  # --- 导航菜单 ---
-  [[params.menu.main]]
-    name = '首页'
-    url = '/'
-    icon = 'ant-design:home-filled'
-    weight = 1
-  [[params.menu.main]]
-    name = '文章'
-    url = '/categories/'
-    icon = 'ant-design:read-filled'
-    navGroup = 'posts'
-    weight = 2
-    [[params.menu.main.items]]
-      name = '分类'
-      url = '/categories/'
-      icon = 'ant-design:appstore-filled'
-    [[params.menu.main.items]]
-      name = '归档'
-      url = '/archives/'
-      icon = 'ant-design:container-filled'
-    [[params.menu.main.items]]
-      name = '标签'
-      url = '/tags/'
-      icon = 'ant-design:tags-filled'
-  [[params.menu.main]]
-    name = '关于'
-    url = '/about/'
-    icon = 'ant-design:idcard-filled'
-    weight = 3
-
-  # --- 评论系统（暂不启用，留作后续配置）---
-  [params.comment]
-    provider = ''
-
-  # --- 文章页脚导航 ---
-  [params.postFooter]
-    navigationMerge = true
-
-  # --- 加载动画 ---
-  [params.loader]
-    enable = true
-    minShow = 0
-    maxDuration = 6000
-
-  # --- PJAX 无刷新跳转 ---
-  [params.pjax]
-    enable = true
-    fadeDuration = 200
-    mountDelay = 120
-
-  # --- 版权声明 ---
-  [params.license]
-    enable = false
+  # --- 自定义链接(首页 README 下方的 Link 区块,可按需增减) ---
+  [[params.links]]
+    title = 'GitHub'
+    href = 'https://github.com/Hongwei6'
+  [[params.links]]
+    title = 'RSS'
+    href = '/index.xml'

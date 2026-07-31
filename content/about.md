@@ -1,9 +1,6 @@
 ---
 title: "关于我"
-layout: "about"
 date: 2026-07-27
-tocStartLevel: 2
-tocEndLevel: 3
 ---
 
 ### 关于本站
