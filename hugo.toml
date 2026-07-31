@@ -77,6 +77,8 @@ pygmentsUseClasses = true
   location = 'China'
   userStatusEmoji = '🚀'
   enableSearch = true
+  # 自定义样式覆盖(调小正文标题字号、优化中文排版,见 static/css/custom.css)
+  custom_css = ['css/custom.css']
   # 使用主题自带的图标资源
   favicon = '/images/github-mark.png'
   avatar = '/images/avatar.png'

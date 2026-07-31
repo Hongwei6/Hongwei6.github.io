@@ -1,0 +1,38 @@
+/* ===========================================================================
+ * 自定义样式覆盖 (github-style 主题)
+ * 主题内置 custom_css 钩子加载,详见 hugo.toml 的 [params] custom_css
+ * =========================================================================== */
+
+/* --- 文章正文标题排版 ---
+ * 主题默认让正文 h2 (1.5em ≈ 24px) 比文章主标题 (~20px) 还大,视觉上本末倒置。
+ * 这里把正文各级标题调小到合理比例,并增加上下间距,让长文阅读更舒服。
+ */
+.markdown-body.entry-content h1 {
+  font-size: 1.5em;
+  margin: 1.2em 0 0.6em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de);
+}
+
+.markdown-body.entry-content h2 {
+  font-size: 1.3em;
+  margin: 1.2em 0 0.6em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border-muted, #d8dee4);
+}
+
+.markdown-body.entry-content h3 {
+  font-size: 1.15em;
+  margin: 1.1em 0 0.5em;
+}
+
+.markdown-body.entry-content h4 {
+  font-size: 1.05em;
+  margin: 1em 0 0.4em;
+}
+
+/* 正文段落与列表行高微调,改善中文阅读体验 */
+.markdown-body.entry-content p,
+.markdown-body.entry-content li {
+  line-height: 1.75;
+}
