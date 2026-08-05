@@ -3,7 +3,7 @@
 # 主题: https://github.com/MeiK2333/github-style
 # ===========================================================================
 baseURL = 'https://hongwei6.github.io/'
-languageCode = 'zh-cn'
+locale = 'zh-cn'
 defaultContentLanguage = 'zh'
 title = "Hongwei's Blog"
 theme = 'github-style'
@@ -41,9 +41,10 @@ pygmentsUseClasses = true
   baseName = 'index'
   isPlainText = false
 
-# --- 最后修改时间(从 git 历史解析) ---
+# --- Front matter 配置(日期排序、最后修改时间) ---
 [frontmatter]
-  lastmod = ['lastmod', ':fileModTime', ':default']
+  date = ["date", "publishDate", "lastmod"]
+  lastmod = ["lastmod", ":fileModTime", ":default"]
 
 # --- Markdown 渲染 ---
 [markup]
