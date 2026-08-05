@@ -155,7 +155,7 @@ public class JdbcChatMemoryController implements InitializingBean {
 
 第一次请求，建立对话：
 ```
-GET /jdbc/memory/chat?chatId=12321&message=i am hollis
+GET /jdbc/memory/chat?chatId=12321&message=i am hong
 ```
 
 第二次请求，测试记忆：
