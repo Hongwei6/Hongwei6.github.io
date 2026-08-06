@@ -140,12 +140,12 @@ public String memory(HttpServletResponse response) {
 
     // 第一轮对话
     messages.add(systemMessage("你是一个AI助手"));
-    messages.add(userMessage("我叫Hollis，是一个程序员"));
+    messages.add(userMessage("我叫Hong，是一个程序员"));
     AiMessage answer = chatModel.chat(messages).aiMessage();
     messages.add(answer);
 
     // 第二轮对话
-    messages.add(userMessage("Hollis是干什么的?"));
+    messages.add(userMessage("Hong是干什么的?"));
     AiMessage answer1 = chatModel.chat(messages).aiMessage();
     messages.add(answer1);
 
@@ -156,7 +156,7 @@ public String memory(HttpServletResponse response) {
 }
 ```
 
-模型能正确记住前两轮的上下文，第三轮被问「我是谁」时仍能回答出「Hollis，程序员」，说明已经具备了记忆能力。
+模型能正确记住前两轮的上下文，第三轮被问「我是谁」时仍能回答出「Hong，程序员」，说明已经具备了记忆能力。
 
 手动维护 `List<ChatMessage>` 可行，但如果需要按固定轮次或 token 数限制记忆，更合适的方式是用 `ChatMemory`。LangChain4j 提供了两种实现：一种按对话轮次限制（`MessageWindowChatMemory`），一种按 token 限制（`TokenWindowChatMemory`）。
 
