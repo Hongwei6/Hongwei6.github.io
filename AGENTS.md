@@ -77,6 +77,8 @@ Archetype at `archetypes/default.md` scaffolds with `draft: true`. Flip to `fals
 
 - 整理本地文档时，去掉教学口吻，写成简洁的技术笔记风格，不要有"教程"味道。
 - 文中涉及的图片必须下载到本地（`static/hero/` 或文章对应目录），用本地路径引用，禁止依赖外部图床链接。
+- front matter 的 `date` 字段必须包含时分秒，使用 ISO 8601 格式：`YYYY-MM-DDTHH:MM:SS+08:00`。
+- 文章按发布时间倒序排列（Hugo 默认行为，最新文章在前）。
 - 文章整理完成后，执行 `git add` → `git commit` → `git push` 推送到 GitHub 触发部署。
 
 ## Conventions
