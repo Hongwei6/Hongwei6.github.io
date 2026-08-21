@@ -1,6 +1,6 @@
 ---
 title: "实战：使用 Spring AI 开发 MCP Client"
-date: 2026-08-21
+date: 2026-08-21T11:04:00+08:00
 draft: false
 description: "基于 Spring AI 实现 MCP Client，支持 Stdio、SSE、Streamable HTTP 三种传输模式，通过配置自动注入或手动构建方式接入 MCP Server"
 tags: ["Spring AI", "Java", "MCP"]
