@@ -36,12 +36,6 @@
               </h3>
             </div>
 
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                {{ .Summary | safeHTML }}
-              </div>
-            </div>
-
             <div class="f6 text-gray mt-2">
               {{ with .Params.tags }}
               {{ range $tag := (first 5 .) }}
